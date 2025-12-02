@@ -37,24 +37,21 @@ Value parse(const std::string& gbln_string) {
     return detail::ffi_to_cpp(managed.get());
 }
 
-Value parse_file(const std::string& path) {
+Value parse_file(const std::filesystem::path& path) {
+    std::string path_str = path.string();
     std::ifstream file(path);
     if (!file) {
-        throw IoError("Cannot open file: " + path);
+        throw IoError("Cannot open file: " + path_str);
     }
     
     std::stringstream buffer;
     buffer << file.rdbuf();
     
     if (file.bad()) {
-        throw IoError("Error reading file: " + path);
+        throw IoError("Error reading file: " + path_str);
     }
     
     return parse(buffer.str());
-}
-
-Value parse_file(const std::filesystem::path& path) {
-    return parse_file(path.string());
 }
 
 } // namespace gbln

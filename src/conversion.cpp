@@ -34,21 +34,78 @@ Value ffi_to_cpp(const GblnValue* ffi_value) {
             return Value(value);
         }
         
-        case I8:
-        case I16:
-        case I32:
-        case I64:
-        case U8:
-        case U16:
-        case U32:
-        case U64: {
-            // Extract as i64 (all integers fit)
+        case I8: {
+            bool ok = false;
+            std::int8_t value = gbln_value_as_i8(ffi_value, &ok);
+            if (!ok) {
+                throw ParseError("Failed to extract i8 value");
+            }
+            return Value(static_cast<std::int64_t>(value));
+        }
+        
+        case I16: {
+            bool ok = false;
+            std::int16_t value = gbln_value_as_i16(ffi_value, &ok);
+            if (!ok) {
+                throw ParseError("Failed to extract i16 value");
+            }
+            return Value(static_cast<std::int64_t>(value));
+        }
+        
+        case I32: {
+            bool ok = false;
+            std::int32_t value = gbln_value_as_i32(ffi_value, &ok);
+            if (!ok) {
+                throw ParseError("Failed to extract i32 value");
+            }
+            return Value(static_cast<std::int64_t>(value));
+        }
+        
+        case I64: {
             bool ok = false;
             std::int64_t value = gbln_value_as_i64(ffi_value, &ok);
             if (!ok) {
-                throw ParseError("Failed to extract integer value");
+                throw ParseError("Failed to extract i64 value");
             }
             return Value(value);
+        }
+        
+        case U8: {
+            bool ok = false;
+            std::uint8_t value = gbln_value_as_u8(ffi_value, &ok);
+            if (!ok) {
+                throw ParseError("Failed to extract u8 value");
+            }
+            return Value(static_cast<std::int64_t>(value));
+        }
+        
+        case U16: {
+            bool ok = false;
+            std::uint16_t value = gbln_value_as_u16(ffi_value, &ok);
+            if (!ok) {
+                throw ParseError("Failed to extract u16 value");
+            }
+            return Value(static_cast<std::int64_t>(value));
+        }
+        
+        case U32: {
+            bool ok = false;
+            std::uint32_t value = gbln_value_as_u32(ffi_value, &ok);
+            if (!ok) {
+                throw ParseError("Failed to extract u32 value");
+            }
+            return Value(static_cast<std::int64_t>(value));
+        }
+        
+        case U64: {
+            bool ok = false;
+            std::uint64_t value = gbln_value_as_u64(ffi_value, &ok);
+            if (!ok) {
+                throw ParseError("Failed to extract u64 value");
+            }
+            // Note: u64 might not fit in i64, but this is the best we can do
+            // without changing the C++ Value type
+            return Value(static_cast<std::int64_t>(value));
         }
         
         case F32: {

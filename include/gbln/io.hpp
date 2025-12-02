@@ -29,9 +29,6 @@ namespace gbln {
 /// @code
 /// auto data = gbln::read_io("config.io.gbln.xz");
 /// @endcode
-Value read_io(const std::string& path);
-
-/// Read GBLN I/O format file (filesystem::path overload).
 Value read_io(const std::filesystem::path& path);
 
 /// Write GBLN I/O format file (.io.gbln.xz).
@@ -47,10 +44,6 @@ Value read_io(const std::filesystem::path& path);
 /// Value data = /* ... */;
 /// gbln::write_io(data, "output.io.gbln.xz");
 /// @endcode
-void write_io(const Value& value, const std::string& path, 
-              const Config& config = Config::io_default());
-
-/// Write GBLN I/O format file (filesystem::path overload).
 void write_io(const Value& value, const std::filesystem::path& path,
               const Config& config = Config::io_default());
 

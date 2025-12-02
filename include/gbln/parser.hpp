@@ -37,14 +37,6 @@ Value parse(const std::string& gbln_string);
 /// @return Parsed GBLN value
 /// @throws ParseError if parsing fails
 /// @throws IoError if file cannot be read
-Value parse_file(const std::string& path);
-
-/// Parse GBLN file to Value (filesystem::path overload).
-///
-/// @param path Path to .gbln file
-/// @return Parsed GBLN value
-/// @throws ParseError if parsing fails
-/// @throws IoError if file cannot be read
 Value parse_file(const std::filesystem::path& path);
 
 } // namespace gbln

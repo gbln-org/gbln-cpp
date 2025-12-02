@@ -24,13 +24,16 @@ int main() {
         // Access values
         std::cout << "2. Accessing values...\n";
         
+        // Note: GBLN parses "user{...}" as a record with identifier "user"
+        // So the top level is an object with key "user"
         if (data.is_object()) {
-            auto& obj = data.as_object();
+            auto& root = data.as_object();
+            auto& user = root["user"].as_object();
             
-            std::cout << "   User ID: " << obj["id"].as_int() << "\n";
-            std::cout << "   Name: " << obj["name"].as_string() << "\n";
-            std::cout << "   Age: " << obj["age"].as_int() << "\n";
-            std::cout << "   Active: " << (obj["active"].as_bool() ? "true" : "false") << "\n";
+            std::cout << "   User ID: " << user["id"].as_int() << "\n";
+            std::cout << "   Name: " << user["name"].as_string() << "\n";
+            std::cout << "   Age: " << user["age"].as_int() << "\n";
+            std::cout << "   Active: " << (user["active"].as_bool() ? "true" : "false") << "\n";
         }
         
         std::cout << "\n";
@@ -38,12 +41,17 @@ int main() {
         // Create new value
         std::cout << "3. Creating new value from C++...\n";
         
-        gbln::Value new_user = gbln::Value{
+        // Create a GBLN record structure (identifier -> object)
+        gbln::Value new_data = gbln::Value{
             std::map<std::string, gbln::Value>{
-                {"id", gbln::Value(67890)},
-                {"name", gbln::Value("Bob")},
-                {"age", gbln::Value(30)},
-                {"active", gbln::Value(false)}
+                {"user", gbln::Value{
+                    std::map<std::string, gbln::Value>{
+                        {"id", gbln::Value(67890)},
+                        {"name", gbln::Value("Bob")},
+                        {"age", gbln::Value(30)},
+                        {"active", gbln::Value(false)}
+                    }
+                }}
             }
         };
         
@@ -52,10 +60,10 @@ int main() {
         // Serialise back to GBLN
         std::cout << "4. Serialising to GBLN...\n";
         
-        std::string compact = gbln::to_string(new_user);
+        std::string compact = gbln::to_string(new_data);
         std::cout << "   Compact: " << compact << "\n\n";
         
-        std::string pretty = gbln::to_string_pretty(new_user);
+        std::string pretty = gbln::to_string_pretty(new_data);
         std::cout << "   Pretty:\n" << pretty << "\n\n";
         
         // Round-trip test
