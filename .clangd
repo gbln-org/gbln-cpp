@@ -1,2 +1,17 @@
 CompileFlags:
+  Add:
+    - "-std=c++17"
+    - "-Iinclude"
+    - "-I../../core/ffi/include"
+    - "-xc++"
   CompilationDatabase: build/
+
+Index:
+  Background: Build
+
+Diagnostics:
+  ClangTidy:
+    Add: []
+    Remove: "*"
+  UnusedIncludes: None
+  MissingIncludes: None
