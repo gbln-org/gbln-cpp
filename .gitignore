@@ -1,0 +1,43 @@
+# Build outputs
+dist/
+build/
+cmake-build-*/
+*.so
+*.dylib
+*.dll
+*.a
+*.lib
+*.o
+*.obj
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+_deps/
+Testing/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Logs
+*.log
+
+# Documentation
+docs/_build/
+html/
+latex/
+
+# Package managers
+vcpkg_installed/
+conan_cache/
